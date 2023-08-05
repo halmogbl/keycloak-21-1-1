@@ -1,0 +1,17 @@
+version: "3"
+services:
+    keycloak:
+        image: quay.io/keycloak/keycloak:21.1.1
+        environment:
+            KC_DB_SCHEMA: public
+            KEYCLOAK_ADMIN: admin
+            KEYCLOAK_ADMIN_PASSWORD: admin 
+        ports:
+            - 8080:8080
+        command: ["start", "--optimized", "--proxy", "edge", "--hostname-strict=false"]  # Use the start command to start Keycloak in production mode, Use the start-dev command to start Keycloak in development mode
+
+        restart: unless-stopped
+        volumes:
+            - ./keycloak/data:/opt/keycloak/data
+            - ./keycloak/themes:/opt/keycloak/themes
+            - ./keycloak/conf:/opt/keycloak/conf
